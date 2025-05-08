@@ -3,19 +3,26 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo Installing dependencies
-      - mvn install
+      # Install dependencies
+      - echo Installing dependencies...
+      - mvn install -DskipTests
 
   build:
     commands:
-      - echo Building the project
-      - mvn package
+      # Build the project
+      - echo Building the project...
+      - mvn package -DskipTests
 
   post_build:
     commands:
-      - echo Running Unit Tests
+      # Run unit tests
+      - echo Running unit tests...
       - mvn test
 
 artifacts:
   files:
-    - target/*.jar
+    - target/*.jar  # Uploads the JAR file to S3 (if you have configured S3 artifacts)
+
+cache:
+  paths:
+    - '/root/.m2/**/*'  # Caching Maven dependencies for faster builds
